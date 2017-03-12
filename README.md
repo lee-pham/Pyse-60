@@ -1,2 +1,4 @@
 # Pyse-60
-Wyse 60 terminal emulator written in Python
+A curses application written in Python that interprets a Wyse 60 output from a serial device.
+
+This application has yet to be tested on a real time device is text logs are currently being used to simulate the serial device output. 
