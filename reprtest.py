@@ -1,6 +1,71 @@
 # -*- coding: utf-8 -*-
 
+linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
+            '*', '+', ',', '-', '.', '/', '0', '1', '2', '3',
+            '4', '5', '6', '7', '8', '9', ':', ';', '<', '=',
+            '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[',
+            '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
+            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p']
+
 data = """␛H␂␛=%`0
+4
+4
+␛=%$0"""
+
+aaa = data.split('␛')
+
+if aaa[0] == '':
+    del aaa[0]
+
+# escsplit = ['H\xe2\x90\x82', '=%`0\n4\n4\n', '=%$0']
+
+
+def megaparse(escsplit):
+    for i, string in enumerate(escsplit):
+
+        if string[0] == '=' and string[-1] == '\n':
+            templist = list(string[:-1])
+            rowint = linecode.index(string[1])
+            col = string[2]
+
+            for j, char in enumerate(templist):
+                if char == '\n':
+                    rowint += 1
+                    templist[j] = '=' + linecode[rowint] + col
+
+            escsplit[i] = ''.join(templist)
+
+    return escsplit
+
+
+def gigaparse(data):
+    datasplit = data.split('␛')
+    if datasplit[0] == '':
+        del datasplit[0]
+
+    for i, string in enumerate(datasplit):
+        if string[-1] == '\n':
+            datasplit[i] = string[:-1]
+        datasplit[i] = '␛' + datasplit[i]
+
+    for j, string1 in enumerate(datasplit):
+        if string1[1] == '=':
+            row = linecode.index(string1[2])
+            col = string1[3]
+            temp = list(string1)
+            for k, string2 in enumerate(temp):
+                if string2 == '\n':
+                    row += 1
+                    temp[k] = '␛=' + linecode[row] + col
+
+            datasplit[j] = ''.join(temp)
+
+    return ''.join(datasplit)
+
+data2 = """␛H␂␛=%`0
 4
 4
 4
@@ -180,8 +245,4 @@ S
 6
 ␛H␃"""
 
-for i in range(0, 10):
-    print(data[i])
-
-if data[8] == '\n':
-    print('hi')
+print(gigaparse(data2))
