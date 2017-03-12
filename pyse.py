@@ -52,7 +52,7 @@ def superparser(raw):
             for j in range(0, len(esclistlist)):
                 if esclistlist[j] == '\n':
                     rownumber += 1
-                    esclistlist[j] = '␛=' + linecode[rownumber] + col
+                    esclistlist[j] = '=' + linecode[rownumber] + col
 
             esclist[i] = ''.join(esclistlist)
 
@@ -73,11 +73,8 @@ def wyprint(line):
     global color
     gmode = False
     cache = color
-    temp = line.split("␛")
-    if temp[0] == '':
-        del temp[0]
 
-    for i in temp:
+    for i in line:
         if i[0] == ')':
             cache = color
             color = 2
@@ -289,7 +286,7 @@ S
 
 """
 
-cleaned = superparser(data2)
+cleaned = superparser(data)
 print(cleaned)
 wyprint(cleaned)
 

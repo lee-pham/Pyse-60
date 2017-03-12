@@ -201,9 +201,6 @@ for i in split:
     if i[-1] == '\n':
         keep.append(i)
 
-print(keep)
-subject = list(keep[0])
-print(subject)
 
 
 def newline(x):
@@ -219,13 +216,28 @@ def newline(x):
 
     return ''.join(x)
 
-aaa = newline(subject)
-print(aaa)
-
 
 def superparser(raw):
-    raw = raw.split('␛')
-    if raw[0] == '':
-        del raw[0]
+    esclist = raw.split('␛')
+    if esclist[0] == '':
+        del esclist[0]
 
-    for index in raw:
+    for i in range(0, len(esclist)):
+        if esclist[i][0] == '=' and esclist[i][-1] == '\n':
+            row = esclist[i][1]
+            col = esclist[i][2]
+            rownumber = linecode.index(row)
+            esclistlist = list(esclist[i])[:-1]
+
+            for j in range(0, len(esclistlist)):
+                if esclistlist[j] == '\n':
+                    rownumber += 1
+                    esclistlist[j] = '=' + linecode[rownumber] + col
+
+            esclist[i] = ''.join(esclistlist)
+
+    return ''.join(esclist)
+
+print(a)
+for i in a:
+    print(i)
