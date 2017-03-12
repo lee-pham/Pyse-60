@@ -16,7 +16,7 @@ def graphicsmode(raw):
                 ':': '━',
                 ' ': ' ',
                 '␋': '␋',
-                '\n': '┃'}
+                '\n': '\n'}
 
     box = []
     for i in raw:
@@ -36,6 +36,7 @@ linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
             'p']
 
+# setup curses window
 stdscr = curses.initscr()
 curses.start_color()
 curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)  # Graphics mode
@@ -270,6 +271,7 @@ S
 6
 6
 ␛H␃␛)␛=I6DATA FOR WED MAR 08, 2017␛=I_6AM-6PM␛=B% 0.0␛=D% 0.0␛=@* 6.0␛=B* 0.0␛=?/ 6.0␛=A/ 7.0␛=@4 7.0␛=B4 0.0␛=?9 6.0␛=A9 4.0␛=>> 6.0␛=@> 8.0␛=@C 6.0␛=BC 0.0␛=AH 4.7␛=CH␛=>M 7.5␛=@M 8.0␛=@R 6.0␛=BR 1.0␛=BW 0.0␛=DW 0.0␛=B\ 0.0␛=D\ 0.0␛=?a␛=?a 6.2␛=Aa␛=?f 5.5␛=Af␛=?k 5.7␛=Ak␛=?p␛=D% 00 ␛=E% 00 ␛=D* 01 ␛=E* 00 ␛=D/ 01 ␛=E/ 01 ␛=D4 01 ␛=E4 00 ␛=D9 02 ␛=E9 02 ␛=D> 02 ␛=E> 01 ␛=DC 02 ␛=EC 00 ␛=DH 04 ␛=EH 00 ␛=DM 05 ␛=EM 02 ␛=DR 02 ␛=ER 01 ␛=DW 00 ␛=EW 00 ␛=D\ 00 ␛=E\ 00 ␛=Da 20 ␛=Df 07 ␛=G#6AM  7AM  8AM  9AM  10AM 11AM 12N  1PM  2PM  3PM  4PM  5PM  6PM ␛(␛A38␛F03/08/17 16:25:05        F4 = Main Menu"""
+data = """␛H␂␛=%`0␛=&`4␛='`4␛=(`4␛=)`4␛=*`8␛=+`4␛=,`4␛=-`4␛=.`4␛=/`8␛=0`4␛=1`4␛=2`4␛=3`4␛=4`8␛=5`4␛=6`4␛=7`4␛=8`4␛=9`8␛=:`4␛=;`4␛=<`4␛==`4␛=>`8␛=?`4␛=@`4␛=A`4␛=B`4␛=C`8␛=D`"""
 wyprint(data)
 stdscr.refresh()
 stdscr.getch()

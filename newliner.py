@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
-data = """␛`:␛`0␛=$8Performance Reports Menu (F2)␛)␛=*21  -  System Performance Graph␛=-22  -  Hall Call Distribution Table␛=023  -  Clear Reports␛=31␛(␛H␂␛=',2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3␛=(*2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3 6␛=)*6␛=)e6 6␛=**6␛=*e6 6␛=+*6␛=+e6 6␛=,*6␛=,e6 6␛=-*6␛=-e6 6␛=.*6␛=.e6 6␛=/*6␛=/e6 6␛=0*6␛=0e6 6␛=1*6␛=1e6 6␛=2*6␛=2e6 6␛=3*6␛=3e6 6␛=4*1::::::::::::::::::::::::::::::::::::::::::::::::::::::::::5␋:5␛H␃␛A38␛F03/08/17 16:25:02        F4 = Main Menu
-␛A38␛F03/08/17 16:25:03        F4 = Main Menu
-␅␛A38␛F03/08/17 16:25:04        F4 = Main Menu
-1␛A10␛z(
-␛`0␛+␛`:␛`0␛A14␛z(                      Up = Next Day     Down = Previous Day
-␛A3:␛FPLEASE WAIT.... PROCESSING
-␛=!9MCE SYSTEM PERFORMANCE GRAPH␛H␂␛=%`0
+
+linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
+            '*', '+', ',', '-', '.', '/', '0', '1', '2', '3',
+            '4', '5', '6', '7', '8', '9', ':', ';', '<', '=',
+            '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[',
+            '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
+            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p']
+
+data = """␛H␂␛=%`0
 4
 4
 4
@@ -186,6 +191,36 @@ S
 ␛H␃␛)␛=I6DATA FOR WED MAR 08, 2017␛=I_6AM-6PM␛=B% 0.0␛=D% 0.0␛=@* 6.0␛=B* 0.0␛=?/ 6.0␛=A/ 7.0␛=@4 7.0␛=B4 0.0␛=?9 6.0␛=A9 4.0␛=>> 6.0␛=@> 8.0␛=@C 6.0␛=BC 0.0␛=AH 4.7␛=CH␛=>M 7.5␛=@M 8.0␛=@R 6.0␛=BR 1.0␛=BW 0.0␛=DW 0.0␛=B\ 0.0␛=D\ 0.0␛=?a␛=?a 6.2␛=Aa␛=?f 5.5␛=Af␛=?k 5.7␛=Ak␛=?p␛=D% 00 ␛=E% 00 ␛=D* 01 ␛=E* 00 ␛=D/ 01 ␛=E/ 01 ␛=D4 01 ␛=E4 00 ␛=D9 02 ␛=E9 02 ␛=D> 02 ␛=E> 01 ␛=DC 02 ␛=EC 00 ␛=DH 04 ␛=EH 00 ␛=DM 05 ␛=EM 02 ␛=DR 02 ␛=ER 01 ␛=DW 00 ␛=EW 00 ␛=D\ 00 ␛=E\ 00 ␛=Da 20 ␛=Df 07 ␛=G#6AM  7AM  8AM  9AM  10AM 11AM 12N  1PM  2PM  3PM  4PM  5PM  6PM ␛(␛A38␛F03/08/17 16:25:05        F4 = Main Menu
 
 """
-parsed = data.split("␛=")
-print(parsed)
+split = data.split('␛')
 
+if split[0] == '':
+    del split[0]
+
+keep = []
+for i in split:
+    if i[-1] == '\n':
+        keep.append(i)
+
+print(keep)
+subject = list(keep[0])
+print(subject)
+
+
+def newline(x):
+    if x[0] == '=':
+        row = x[1]
+        col = x[2]
+        rownumber = linecode.index(row)
+        print(rownumber)
+        for j in range(0, len(x)):
+            if x[j] == '\n':
+                rownumber += 1
+                x[j] = '␛=' + linecode[rownumber] + col
+
+    return ''.join(x)
+
+
+
+
+aaa = newline(subject)
+print(aaa)
