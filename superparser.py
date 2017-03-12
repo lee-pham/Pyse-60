@@ -221,3 +221,11 @@ def newline(x):
 
 aaa = newline(subject)
 print(aaa)
+
+
+def superparser(raw):
+    raw = raw.split('␛')
+    if raw[0] == '':
+        del raw[0]
+
+    for index in raw:
