@@ -7,7 +7,7 @@ curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)  # Write-protect mode
 color = 0
 stdscr.resize(44, 82)
 stdscr.border(0)
-stdscr.addnstr(5, 1, "test", 5)
+stdscr.addnstr(5, 60, "", 5, curses.color_pair(2))
 stdscr.getch()
 a = """h
 i"""
