@@ -67,6 +67,7 @@ stdscr = curses.initscr()
 curses.start_color()
 curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)  # Graphics mode
 curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)  # Write-protect mode
+curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_GREEN)  # unshifted label line
 color = 0
 stdscr.resize(46, 82)
 
@@ -74,11 +75,11 @@ stdscr.resize(46, 82)
 def borderdraw():
     stdscr.border(0)
     stdscr.addstr(2, 0, '├────────────────────────────────────────────────────────────────────────────────┤')
-    stdscr.addstr(43, 0, '├────────────────────────────────────────────────────────────────────────────────┤')
 
 
 borderdraw()
 stdscr.getch()
+
 
 def wyprint(line):
     global color
@@ -107,14 +108,21 @@ def wyprint(line):
 
         elif i[0] == '=':
             if gmode:
-                stdscr.addstr(linecode.index(i[1]) + 1, linecode.index(i[2]) + 1, graphicsmode(i[3:]), curses.color_pair(color))
+                stdscr.addstr(linecode.index(i[1]) + 2, linecode.index(i[2]) + 1, graphicsmode(i[3:]), curses.color_pair(color))
 
             else:
-                stdscr.addstr(linecode.index(i[1]) + 1, linecode.index(i[2]) + 1, i[3:], curses.color_pair(color))
+                stdscr.addstr(linecode.index(i[1]) + 2, linecode.index(i[2]) + 1, i[3:], curses.color_pair(color))
+
+        elif i[0] == 'F':
+            stdscr.addstr(1, 1, i[1:], curses.color_pair(2))
 
         elif i[0] == '+':
+            stdscr.getch()
             stdscr.clear()
             borderdraw()
+
+        elif i[0:2] == 'z(':
+            stdscr.addstr(44, 1, i[2:], curses.color_pair(3))
 
         # stdscr.getch()
         stdscr.refresh()

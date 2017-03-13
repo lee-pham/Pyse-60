@@ -10,6 +10,9 @@ This application has yet to be tested on a real time device as text logs are cur
  ESC (                       Write-protect mode off (only changes colors)
  ESC H STX (ESC H CTRL B)    Graphics mode on
  ESC H ETX (ESC H CTRL B)    Graphics mode on
+ ESC +                       Clear page to spaces
+ ESC z ( text                Program/display unshifted label line
+
  ```
  Need to add:
  ```
@@ -18,10 +21,7 @@ This application has yet to be tested on a real time device as text logs are cur
  ESC A 3 8
  ESC F message CR            Program and display computer message on status line
  ESC ENQ
- ESC 1                       Set tab stop
  ESC A 1 0
- ESC +                       Clear page to spaces
- ESC z ( text                Program/display unshifted label line
  ESC A 1 4
  ESC A 3 :
  
