@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+
 import curses
-import time
 
 
 def graphicsmode(raw):
@@ -62,28 +62,6 @@ def gigaparse(data):
     return ''.join(datasplit)
 
 
-def superparser(raw):
-    esclist = raw.split('␛')
-    if esclist[0] == '':
-        del esclist[0]
-
-    for i in range(0, len(esclist)):
-        if esclist[i][0] == '=' and esclist[i][-1] == '\n':
-            row = esclist[i][1]
-            col = esclist[i][2]
-            rownumber = linecode.index(row)
-            esclistlist = list(esclist[i])[:-1]
-
-            for j in range(0, len(esclistlist)):
-                if esclistlist[j] == '\n':
-                    rownumber += 1
-                    esclistlist[j] = '=' + linecode[rownumber] + col
-
-            esclist[i] = ''.join(esclistlist)
-
-    return ''.join(esclist)
-
-
 # setup curses window
 stdscr = curses.initscr()
 curses.start_color()
@@ -121,17 +99,12 @@ def wyprint(line):
 
         elif i[0] == '=':
             if gmode:
-
-                stdscr.addstr(linecode.index(i[1]), linecode.index(i[2]), graphicsmode(i[3:]), curses.color_pair(color))
+                stdscr.addstr(linecode.index(i[1]), linecode.index(i[2])+1, graphicsmode(i[3:]), curses.color_pair(color))
 
             else:
-                stdscr.addstr(linecode.index(i[1]), linecode.index(i[2]), i[3:], curses.color_pair(color))
+                stdscr.addstr(linecode.index(i[1]), linecode.index(i[2])+1, i[3:], curses.color_pair(color))
 
-        stdscr.getch()
         stdscr.refresh()
-
-
-data = """␛H␂␛=%`0␛=&`4␛='`4␛=(`4␛=)`4␛=*`8␛=+`4␛=,`4␛=-`4␛=.`4␛=/`8␛=0`4␛=1`4␛=2`4␛=3`4␛=4`8␛=5`4␛=6`4␛=7`4␛=8`4␛=9`8␛=:`4␛=;`4␛=<`4␛==`4␛=>`8␛=?`4␛=@`4␛=A`4␛=B`4␛=C`8␛=%$0␛=&$4␛='$4␛=($4␛=)$4␛=*$8␛=+$4␛=,$4␛=-$4␛=.$4␛=/$8␛=0$4␛=1$4␛=2$4␛=3$4␛=4$8␛=5$4␛=6$4␛=7$4␛=8$4␛=9$8␛=:$4␛=;$4␛=<$4␛==$4␛=>$8␛=?$4␛=@$4␛=A$4␛=B$4␛=C$8␛=C%::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8␛=F$8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8::::8␛=D$6␛=E$6␛=D)6␛=E)6␛=D.6␛=E.6␛=D36␛=E36␛=D86␛=E86␛=D=6␛=E=6␛=DB6␛=EB6␛=DG6␛=EG6␛=DL6␛=EL6␛=DQ6␛=EQ6␛=DV6␛=EV6␛=D[6␛=E[6␛=D`6␛=E`6␛=De6␛=Ee6␛=Dj6␛=Ej6␛=Do6␛=Eo6␛H␃␛)␛=EbUP␌␌␌DN␌␌␌SYS␛=D # UP␛=E # DN␛=#0HOURLY AVERAGE HALL CALL WAITING TIME␛=#bSYSTEM AVERAGE␛=. S␛=/ ␛=0 E␛=1 ␛=2 C␛=3 ␛=4 O␛=5 ␛=6 N␛=7 ␛=8 D␛=9 ␛=: S␛=; ␛=%"60␛=&"␛='"␛=("␛=)"␛=*"50␛=+"␛=,"␛=-"␛=."␛=/"40␛=0"␛=1"␛=2"␛=3"␛=4"30␛=5"␛=6"␛=7"␛=8"␛=9"20␛=:"␛=;"␛=<"␛=="␛=>"10␛=?"␛=@"␛=A"␛=B"␛=C"0␛(␛H␂␛=A)6␛=B)6␛=A)2::::3␛=B)6␛=@.6␛=A.9␛=@.2::::3␛=A.6␛=B.6␛=A34::::3␛=B36␛=@86␛=A89␛=@82::::3␛=A86␛=B86␛=?=6␛=@=9␛=?=2::::3␛=@=6␛=A=6␛=B=6␛=AB4::::3␛=BB6␛=BG4::::3␛=?L6␛=@L6␛=AL6␛=BL9␛=?L2::::3␛=@L6␛=AL6␛=BL6␛=AQ4::::3␛=BQ6␛=@a::::3␛=Aa6␛=Ba6␛=@e0::::3␛=Ae6␛=Be6␛=@j0::::3␛=Aj6␛=Bj6␛H␃"""
 
 
 data3 = """␛`:␛`0␛=$8Performance Reports Menu (F2)␛)␛=*21  -  System Performance Graph␛=-22  -  Hall Call Distribution Table␛=023  -  Clear Reports␛=31␛(␛H␂␛=',2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3␛=(*2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3 6␛=)*6␛=)e6 6␛=**6␛=*e6 6␛=+*6␛=+e6 6␛=,*6␛=,e6 6␛=-*6␛=-e6 6␛=.*6␛=.e6 6␛=/*6␛=/e6 6␛=0*6␛=0e6 6␛=1*6␛=1e6 6␛=2*6␛=2e6 6␛=3*6␛=3e6 6␛=4*1::::::::::::::::::::::::::::::::::::::::::::::::::::::::::5␋:5␛H␃␛A38␛F03/08/17 16:25:02        F4 = Main Menu
@@ -321,6 +294,12 @@ S
 ␛H␃␛)␛=I6DATA FOR WED MAR 08, 2017␛=I_6AM-6PM␛=B% 0.0␛=D% 0.0␛=@* 6.0␛=B* 0.0␛=?/ 6.0␛=A/ 7.0␛=@4 7.0␛=B4 0.0␛=?9 6.0␛=A9 4.0␛=>> 6.0␛=@> 8.0␛=@C 6.0␛=BC 0.0␛=AH 4.7␛=CH␛=>M 7.5␛=@M 8.0␛=@R 6.0␛=BR 1.0␛=BW 0.0␛=DW 0.0␛=B\ 0.0␛=D\ 0.0␛=?a␛=?a 6.2␛=Aa␛=?f 5.5␛=Af␛=?k 5.7␛=Ak␛=?p␛=D% 00 ␛=E% 00 ␛=D* 01 ␛=E* 00 ␛=D/ 01 ␛=E/ 01 ␛=D4 01 ␛=E4 00 ␛=D9 02 ␛=E9 02 ␛=D> 02 ␛=E> 01 ␛=DC 02 ␛=EC 00 ␛=DH 04 ␛=EH 00 ␛=DM 05 ␛=EM 02 ␛=DR 02 ␛=ER 01 ␛=DW 00 ␛=EW 00 ␛=D\ 00 ␛=E\ 00 ␛=Da 20 ␛=Df 07 ␛=G#6AM  7AM  8AM  9AM  10AM 11AM 12N  1PM  2PM  3PM  4PM  5PM  6PM ␛(␛A38␛F03/08/17 16:25:05        F4 = Main Menu"""
 
 wyprint(gigaparse(data3))
+a = gigaparse(data3).split('␛')
+if a[0] == '':
+    del a[0]
 
+for i in a:
+    if i[0] != '=':
+        print(i)
 stdscr.getch()
 curses.endwin()

@@ -10,36 +10,6 @@ linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
             'p']
 
-data = """␛H␂␛=%`0
-4
-4
-␛=%$0"""
-
-aaa = data.split('␛')
-
-if aaa[0] == '':
-    del aaa[0]
-
-# escsplit = ['H\xe2\x90\x82', '=%`0\n4\n4\n', '=%$0']
-
-
-def megaparse(escsplit):
-    for i, string in enumerate(escsplit):
-
-        if string[0] == '=' and string[-1] == '\n':
-            templist = list(string[:-1])
-            rowint = linecode.index(string[1])
-            col = string[2]
-
-            for j, char in enumerate(templist):
-                if char == '\n':
-                    rowint += 1
-                    templist[j] = '=' + linecode[rowint] + col
-
-            escsplit[i] = ''.join(templist)
-
-    return escsplit
-
 
 def gigaparse(data):
     datasplit = data.split('␛')
@@ -65,7 +35,21 @@ def gigaparse(data):
 
     return ''.join(datasplit)
 
-data2 = """␛H␂␛=%`0
+
+def autosplit(string):
+    out = string.split('␛')
+    if out[0] == '':
+        del out[0]
+
+    return out
+
+data2 = """␛`:␛`0␛=$8Performance Reports Menu (F2)␛)␛=*21  -  System Performance Graph␛=-22  -  Hall Call Distribution Table␛=023  -  Clear Reports␛=31␛(␛H␂␛=',2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3␛=(*2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3 6␛=)*6␛=)e6 6␛=**6␛=*e6 6␛=+*6␛=+e6 6␛=,*6␛=,e6 6␛=-*6␛=-e6 6␛=.*6␛=.e6 6␛=/*6␛=/e6 6␛=0*6␛=0e6 6␛=1*6␛=1e6 6␛=2*6␛=2e6 6␛=3*6␛=3e6 6␛=4*1::::::::::::::::::::::::::::::::::::::::::::::::::::::::::5␋:5␛H␃␛A38␛F03/08/17 16:25:02        F4 = Main Menu
+␛A38␛F03/08/17 16:25:03        F4 = Main Menu
+␅␛A38␛F03/08/17 16:25:04        F4 = Main Menu
+1␛A10␛z(
+␛`0␛+␛`:␛`0␛A14␛z(                      Up = Next Day     Down = Previous Day
+␛A3:␛FPLEASE WAIT.... PROCESSING
+␛=!9MCE SYSTEM PERFORMANCE GRAPH␛H␂␛=%`0
 4
 4
 4
@@ -243,6 +227,9 @@ S
 ␛=@j0::::3
 6
 6
-␛H␃"""
+␛H␃␛)␛=I6DATA FOR WED MAR 08, 2017␛=I_6AM-6PM␛=B% 0.0␛=D% 0.0␛=@* 6.0␛=B* 0.0␛=?/ 6.0␛=A/ 7.0␛=@4 7.0␛=B4 0.0␛=?9 6.0␛=A9 4.0␛=>> 6.0␛=@> 8.0␛=@C 6.0␛=BC 0.0␛=AH 4.7␛=CH␛=>M 7.5␛=@M 8.0␛=@R 6.0␛=BR 1.0␛=BW 0.0␛=DW 0.0␛=B\ 0.0␛=D\ 0.0␛=?a␛=?a 6.2␛=Aa␛=?f 5.5␛=Af␛=?k 5.7␛=Ak␛=?p␛=D% 00 ␛=E% 00 ␛=D* 01 ␛=E* 00 ␛=D/ 01 ␛=E/ 01 ␛=D4 01 ␛=E4 00 ␛=D9 02 ␛=E9 02 ␛=D> 02 ␛=E> 01 ␛=DC 02 ␛=EC 00 ␛=DH 04 ␛=EH 00 ␛=DM 05 ␛=EM 02 ␛=DR 02 ␛=ER 01 ␛=DW 00 ␛=EW 00 ␛=D\ 00 ␛=E\ 00 ␛=Da 20 ␛=Df 07 ␛=G#6AM  7AM  8AM  9AM  10AM 11AM 12N  1PM  2PM  3PM  4PM  5PM  6PM ␛(␛A38␛F03/08/17 16:25:05        F4 = Main Menu"""
+a = autosplit(gigaparse(data2))
 
-print(gigaparse(data2))
+for l in a:
+    if l[0] != '=':
+        print(l)
