@@ -4,16 +4,16 @@ import curses
 
 
 def graphicsmode(raw):
-    graphics = {'0': '┳',
-                '1': '┗',
-                '2': '┏',
-                '3': '┓',
-                '4': '┣',
-                '5': '┛',
-                '6': '┃',
-                '8': '╋',
-                '9': '┫',
-                ':': '━',
+    graphics = {'0': '┬',
+                '1': '└',
+                '2': '┌',
+                '3': '┐',
+                '4': '├',
+                '5': '┘',
+                '6': '│',
+                '8': '┼',
+                '9': '┤',
+                ':': '─',
                 ' ': ' ',
                 '␋': '␋',
                 '\n': '\n'}
@@ -73,10 +73,12 @@ stdscr.resize(46, 82)
 
 def borderdraw():
     stdscr.border(0)
+    stdscr.addstr(2, 0, '├────────────────────────────────────────────────────────────────────────────────┤')
+    stdscr.addstr(43, 0, '├────────────────────────────────────────────────────────────────────────────────┤')
 
 
 borderdraw()
-
+stdscr.getch()
 
 def wyprint(line):
     global color
@@ -105,16 +107,16 @@ def wyprint(line):
 
         elif i[0] == '=':
             if gmode:
-                stdscr.addstr(linecode.index(i[1]), linecode.index(i[2])+1, graphicsmode(i[3:]), curses.color_pair(color))
+                stdscr.addstr(linecode.index(i[1]) + 1, linecode.index(i[2]) + 1, graphicsmode(i[3:]), curses.color_pair(color))
 
             else:
-                stdscr.addstr(linecode.index(i[1]), linecode.index(i[2])+1, i[3:], curses.color_pair(color))
+                stdscr.addstr(linecode.index(i[1]) + 1, linecode.index(i[2]) + 1, i[3:], curses.color_pair(color))
 
         elif i[0] == '+':
             stdscr.clear()
-            stdscr.border(0)
+            borderdraw()
 
-        stdscr.getch()
+        # stdscr.getch()
         stdscr.refresh()
 
 
