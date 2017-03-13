@@ -68,8 +68,14 @@ curses.start_color()
 curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)  # Graphics mode
 curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)  # Write-protect mode
 color = 0
-stdscr.resize(44, 82)
-stdscr.border(0)
+stdscr.resize(46, 82)
+
+
+def borderdraw():
+    stdscr.border(0)
+
+
+borderdraw()
 
 
 def wyprint(line):
@@ -104,6 +110,11 @@ def wyprint(line):
             else:
                 stdscr.addstr(linecode.index(i[1]), linecode.index(i[2])+1, i[3:], curses.color_pair(color))
 
+        elif i[0] == '+':
+            stdscr.clear()
+            stdscr.border(0)
+
+        stdscr.getch()
         stdscr.refresh()
 
 
@@ -294,12 +305,6 @@ S
 ␛H␃␛)␛=I6DATA FOR WED MAR 08, 2017␛=I_6AM-6PM␛=B% 0.0␛=D% 0.0␛=@* 6.0␛=B* 0.0␛=?/ 6.0␛=A/ 7.0␛=@4 7.0␛=B4 0.0␛=?9 6.0␛=A9 4.0␛=>> 6.0␛=@> 8.0␛=@C 6.0␛=BC 0.0␛=AH 4.7␛=CH␛=>M 7.5␛=@M 8.0␛=@R 6.0␛=BR 1.0␛=BW 0.0␛=DW 0.0␛=B\ 0.0␛=D\ 0.0␛=?a␛=?a 6.2␛=Aa␛=?f 5.5␛=Af␛=?k 5.7␛=Ak␛=?p␛=D% 00 ␛=E% 00 ␛=D* 01 ␛=E* 00 ␛=D/ 01 ␛=E/ 01 ␛=D4 01 ␛=E4 00 ␛=D9 02 ␛=E9 02 ␛=D> 02 ␛=E> 01 ␛=DC 02 ␛=EC 00 ␛=DH 04 ␛=EH 00 ␛=DM 05 ␛=EM 02 ␛=DR 02 ␛=ER 01 ␛=DW 00 ␛=EW 00 ␛=D\ 00 ␛=E\ 00 ␛=Da 20 ␛=Df 07 ␛=G#6AM  7AM  8AM  9AM  10AM 11AM 12N  1PM  2PM  3PM  4PM  5PM  6PM ␛(␛A38␛F03/08/17 16:25:05        F4 = Main Menu"""
 
 wyprint(gigaparse(data3))
-a = gigaparse(data3).split('␛')
-if a[0] == '':
-    del a[0]
 
-for i in a:
-    if i[0] != '=':
-        print(i)
 stdscr.getch()
 curses.endwin()

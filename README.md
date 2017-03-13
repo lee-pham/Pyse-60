@@ -5,7 +5,7 @@ This application has yet to be tested on a real time device as text logs are cur
  
  Currently interprets:
  ```
- ESC = line col Address cursor in current 80-column page
+ ESC = line col              Address cursor in current 80-column page
  ESC )                       Write-protect mode on  (only changes colors)
  ESC (                       Write-protect mode off (only changes colors)
  ESC H STX (ESC H CTRL B)    Graphics mode on
