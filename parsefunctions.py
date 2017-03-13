@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# program designed to show remaining esc codes to add
 
 linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
             '*', '+', ',', '-', '.', '/', '0', '1', '2', '3',
@@ -17,7 +18,8 @@ def gigaparse(data):
         del datasplit[0]
 
     for i, string in enumerate(datasplit):
-        if string[-1] == '\n':
+        # if string[-1] == '\n':
+        if string[-1] == '\n' and string[0] == '␛':
             datasplit[i] = string[:-1]
         datasplit[i] = '␛' + datasplit[i]
 

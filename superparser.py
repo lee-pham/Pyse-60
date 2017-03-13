@@ -202,7 +202,6 @@ for i in split:
         keep.append(i)
 
 
-
 def newline(x):
     if x[0] == '=':
         row = x[1]
