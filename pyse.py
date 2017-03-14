@@ -114,7 +114,8 @@ def wyprint(line):
                 stdscr.addstr(linecode.index(i[1]) + 2, linecode.index(i[2]) + 1, i[3:], curses.color_pair(color))
 
         elif i[0] == 'F':
-            stdscr.addstr(1, 1, i[1:], curses.color_pair(2))
+            stdscr.addstr(1, 1, i[1:], curses.termattrs())
+            stdscr.getch()
 
         elif i[0] == '+':
             stdscr.getch()
@@ -122,9 +123,24 @@ def wyprint(line):
             borderdraw()
 
         elif i[0:2] == 'z(':
-            stdscr.addstr(44, 1, i[2:], curses.color_pair(3))
+            stdscr.addstr(44, 1, i[2:])
 
-        # stdscr.getch()
+        elif i[0] == 'A':
+            if i[1] == '1':
+                if i[2] == '4':
+                    stdscr.attrset(curses.A_REVERSE)
+                    stdscr.addstr(44, 1, '                                                                                ')
+
+                elif i[2] == '0':
+                    stdscr.attroff(curses.A_REVERSE)
+                    pass
+
+            elif i[1] == '3':
+                if i[2] == ':':
+                    stdscr.attroff(curses.termattrs())
+                    stdscr.attrset(curses.A_UNDERLINE | curses.A_BLINK)
+
+        #stdscr.getch()
         stdscr.refresh()
 
 
