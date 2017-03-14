@@ -76,7 +76,6 @@ def borderdraw():
     stdscr.border(0)
     stdscr.addstr(2, 0, '├────────────────────────────────────────────────────────────────────────────────┤')
 
-
 borderdraw()
 stdscr.getch()
 
