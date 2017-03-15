@@ -68,7 +68,7 @@ curses.start_color()
 curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)  # Graphics mode
 curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)  # Write-protect mode
 curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_GREEN)  # unshifted label line
-color = 0
+color = 1
 stdscr.resize(46, 82)
 
 
@@ -113,7 +113,8 @@ def wyprint(line):
                 stdscr.addstr(linecode.index(i[1]) + 2, linecode.index(i[2]) + 1, i[3:], curses.color_pair(color))
 
         elif i[0] == 'F':
-            stdscr.addstr(1, 1, i[1:], curses.termattrs())
+            # stdscr.addstr(1, 1, str(curses.termattrs()))
+            stdscr.addstr(1, 1, i[1:])
             # stdscr.attroff(curses.termattrs())
             stdscr.getch()
 
