@@ -114,6 +114,7 @@ def wyprint(line):
 
         elif i[0] == 'F':
             stdscr.addstr(1, 1, i[1:], curses.termattrs())
+            # stdscr.attroff(curses.termattrs())
             stdscr.getch()
 
         elif i[0] == '+':
@@ -125,21 +126,31 @@ def wyprint(line):
             stdscr.addstr(44, 1, i[2:])
 
         elif i[0] == 'A':
+
+            # Function key label line
             if i[1] == '1':
                 if i[2] == '4':
-                    stdscr.attrset(curses.A_REVERSE)
-                    stdscr.addstr(44, 1, '                                                                                ')
+                    pass
+                    # stdscr.attrset(curses.A_REVERSE)
+                    # stdscr.addstr(44, 1, '                                                                                ')
 
                 elif i[2] == '0':
-                    stdscr.attroff(curses.A_REVERSE)
                     pass
+                    # stdscr.attroff(curses.A_REVERSE)
 
+            # Computer message
             elif i[1] == '3':
                 if i[2] == ':':
-                    stdscr.attroff(curses.termattrs())
-                    stdscr.attrset(curses.A_UNDERLINE | curses.A_BLINK)
 
-        #stdscr.getch()
+                    stdscr.attroff(curses.termattrs())
+                    stdscr.attrset(curses.A_BLINK | curses.A_UNDERLINE)
+
+                elif i[2] == '8':
+
+                    stdscr.attroff(curses.termattrs())
+                    stdscr.attrset(curses.A_UNDERLINE)
+
+        stdscr.getch()
         stdscr.refresh()
 
 
