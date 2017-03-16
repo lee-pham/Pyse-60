@@ -12,6 +12,7 @@ stdscr.getch()
 stdscr.addstr(5, 60, "\n", curses.color_pair(2))
 stdscr.getch()
 a = """h"""
-stdscr.addstr(5, 61, a)
+stdscr.addstr(5, 81, a)
+stdscr.refresh()
 stdscr.getch()
 curses.endwin()
