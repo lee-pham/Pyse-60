@@ -21,7 +21,6 @@ Need to add:
 ```
 ESC ` :
 ESC ` 0
-ESC ENQ
 ESC )                       Write-protect mode on
 ESC (                       Write-protect mode off
 ```

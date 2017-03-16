@@ -1,7 +1,7 @@
 import curses
 
 statusline = curses.initscr()
-
+curses.curs_set(0)
 statusline.resize(46, 82)
 statusline.resize(2, 81)
 dataarea = curses.newwin(42, 81, 2, 1)
@@ -21,6 +21,10 @@ statusline.getch()
 for i in range(0, 42):
     dataarea.addstr(i, 0, str(i + 1))
 
+dataarea.refresh()
+dataarea.getch()
+
+dataarea.chgat(0, 0, curses.A_REVERSE)
 dataarea.refresh()
 dataarea.getch()
 
