@@ -1,5 +1,16 @@
 # -*- coding: utf-8 -*-
 import curses
+import time
+
+linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
+            '*', '+', ',', '-', '.', '/', '0', '1', '2', '3',
+            '4', '5', '6', '7', '8', '9', ':', ';', '<', '=',
+            '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[',
+            '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
+            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p']
 
 
 def graphicsmode(raw):
@@ -23,17 +34,6 @@ def graphicsmode(raw):
 
     box = ''.join(box)
     return box
-
-
-linecode = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')',
-            '*', '+', ',', '-', '.', '/', '0', '1', '2', '3',
-            '4', '5', '6', '7', '8', '9', ':', ';', '<', '=',
-            '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
-            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[',
-            '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
-            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-            'p']
 
 
 def gigaparse(data):
@@ -61,97 +61,89 @@ def gigaparse(data):
     return ''.join(datasplit)
 
 
-# setup curses window
-stdscr = curses.initscr()
-curses.start_color()
-curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)  # Graphics mode
-curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)  # Write-protect mode
-curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_GREEN)  # unshifted label line
-color = 1
-stdscr.resize(46, 82)
+# setup curses
+statusline = curses.initscr()
 
-
-def borderdraw():
-    stdscr.border(0)
-    stdscr.addstr(2, 0, '├────────────────────────────────────────────────────────────────────────────────┤')
-
-borderdraw()
-stdscr.getch()
+statusline.resize(46, 82)
+statusline.resize(2, 81)
+dataarea = curses.newwin(42, 81, 2, 1)
+labelline = curses.newwin(1, 81, 44, 1)
 
 
 def wyprint(line):
-    global color
+    llattr = curses.A_NORMAL
+    slattr = curses.A_NORMAL
     gmode = False
-    cache = color
     line = line.split('␛')
     if line[0] == '':
         del line[0]
 
     for i in line:
         if i[0] == ')':
-            cache = color
-            color = 2
+            pass
 
         elif i[0] == '(':
-            color = cache
+            pass
 
         elif i[0:2] == 'H␂':
             gmode = True
-            cache = color
-            color = 1
 
         elif i[0:2] == 'H␃':
             gmode = False
-            color = cache
 
         elif i[0] == '=':
             if gmode:
-                stdscr.addstr(linecode.index(i[1]) + 2, linecode.index(i[2]) + 1, graphicsmode(i[3:]), curses.color_pair(color))
+                dataarea.addstr(linecode.index(i[1]), linecode.index(i[2]), graphicsmode(i[3:]))
 
             else:
-                stdscr.addstr(linecode.index(i[1]) + 2, linecode.index(i[2]) + 1, i[3:], curses.color_pair(color))
+                dataarea.addstr(linecode.index(i[1]), linecode.index(i[2]), i[3:])
 
+        # Computer message
         elif i[0] == 'F':
-            # stdscr.addstr(1, 1, str(curses.termattrs()))
-            stdscr.addstr(1, 1, i[1:])
-            # stdscr.attroff(curses.termattrs())
-            stdscr.getch()
+            statusline.addstr(1, 1, i[1:-2], slattr)
+            statusline.refresh()
+            statusline.getch()
 
         elif i[0] == '+':
-            stdscr.getch()
-            stdscr.clear()
-            borderdraw()
+            dataarea.getch()
+            dataarea.clear()
 
+        # Function key label line
         elif i[0:2] == 'z(':
-            stdscr.addstr(44, 1, i[2:])
+            labelline.addstr(0, 0, i[2:], llattr)
+            labelline.refresh()
+            labelline.getch()
 
         elif i[0] == 'A':
 
             # Function key label line
             if i[1] == '1':
                 if i[2] == '4':
-                    pass
-                    # stdscr.attrset(curses.A_REVERSE)
-                    # stdscr.addstr(44, 1, '                                                                                ')
+                    llattr = curses.A_REVERSE
+                    labelline.chgat(0, 0, llattr)
 
                 elif i[2] == '0':
-                    pass
-                    # stdscr.attroff(curses.A_REVERSE)
+                    llattr = curses.A_NORMAL
+                    labelline.chgat(0, 0, llattr)
+
+                labelline.refresh()
+                labelline.getch()
 
             # Computer message
             elif i[1] == '3':
                 if i[2] == ':':
-
-                    stdscr.attroff(curses.termattrs())
-                    stdscr.attrset(curses.A_BLINK | curses.A_UNDERLINE)
+                    slattr = curses.A_UNDERLINE | curses.A_BLINK
+                    statusline.chgat(1, 1, slattr)
 
                 elif i[2] == '8':
+                    slattr = curses.A_UNDERLINE
+                    statusline.chgat(1, 1, slattr)
 
-                    stdscr.attroff(curses.termattrs())
-                    stdscr.attrset(curses.A_UNDERLINE)
+                statusline.refresh()
+                statusline.getch()
 
-        stdscr.getch()
-        stdscr.refresh()
+        time.sleep(.0025)
+        dataarea.refresh()
 
 
 data3 = """␛`:␛`0␛=$8Performance Reports Menu (F2)␛)␛=*21  -  System Performance Graph␛=-22  -  Hall Call Distribution Table␛=023  -  Clear Reports␛=31␛(␛H␂␛=',2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3␛=(*2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3 6␛=)*6␛=)e6 6␛=**6␛=*e6 6␛=+*6␛=+e6 6␛=,*6␛=,e6 6␛=-*6␛=-e6 6␛=.*6␛=.e6 6␛=/*6␛=/e6 6␛=0*6␛=0e6 6␛=1*6␛=1e6 6␛=2*6␛=2e6 6␛=3*6␛=3e6 6␛=4*1::::::::::::::::::::::::::::::::::::::::::::::::::::::::::5␋:5␛H␃␛A38␛F03/08/17 16:25:02        F4 = Main Menu
@@ -342,5 +334,5 @@ S
 
 wyprint(gigaparse(data3))
 
-stdscr.getch()
+dataarea.getch()
 curses.endwin()

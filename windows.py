@@ -8,6 +8,7 @@ dataarea = curses.newwin(42, 81, 2, 1)
 labelline = curses.newwin(1, 81, 44, 1)
 
 statusline.addstr(1, 1, 'status here')
+statusline.getch()
 statusline.refresh()
 statusline.getch()
 
