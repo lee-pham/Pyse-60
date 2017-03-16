@@ -98,6 +98,8 @@ def wyprint(line):
             else:
                 dataarea.addstr(linecode.index(i[1]), linecode.index(i[2]), i[3:])
 
+            dataarea.refresh()
+
         # Computer message
         elif i[0] == 'F':
             statusline.addstr(1, 1, i[1:-2], slattr)
@@ -143,7 +145,6 @@ def wyprint(line):
                 statusline.getch()
 
         time.sleep(.0025)
-        dataarea.refresh()
 
 
 data3 = """␛`:␛`0␛=$8Performance Reports Menu (F2)␛)␛=*21  -  System Performance Graph␛=-22  -  Hall Call Distribution Table␛=023  -  Clear Reports␛=31␛(␛H␂␛=',2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3␛=(*2::::::::::::::::::::::::::::::::::::::::::::::::::::::::::3 6␛=)*6␛=)e6 6␛=**6␛=*e6 6␛=+*6␛=+e6 6␛=,*6␛=,e6 6␛=-*6␛=-e6 6␛=.*6␛=.e6 6␛=/*6␛=/e6 6␛=0*6␛=0e6 6␛=1*6␛=1e6 6␛=2*6␛=2e6 6␛=3*6␛=3e6 6␛=4*1::::::::::::::::::::::::::::::::::::::::::::::::::::::::::5␋:5␛H␃␛A38␛F03/08/17 16:25:02        F4 = Main Menu
