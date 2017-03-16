@@ -79,13 +79,7 @@ def wyprint(line):
         del line[0]
 
     for i in line:
-        if i[0] == ')':
-            pass
-
-        elif i[0] == '(':
-            pass
-
-        elif i[0:2] == 'H␂':
+        if i[0:2] == 'H␂':
             gmode = True
 
         elif i[0:2] == 'H␃':
@@ -100,24 +94,22 @@ def wyprint(line):
 
             dataarea.refresh()
 
+        elif i[0] == '+':
+            dataarea.clear()
+            dataarea.refresh()
+
         # Computer message
-        elif i[0] == 'F':
+        if i[0] == 'F':
             statusline.addstr(1, 1, i[1:-2], slattr)
             statusline.refresh()
-            statusline.getch()
-
-        elif i[0] == '+':
-            dataarea.getch()
-            dataarea.clear()
 
         # Function key label line
-        elif i[0:2] == 'z(':
+        if i[0:2] == 'z(':
             labelline.addstr(0, 0, i[2:], llattr)
             labelline.refresh()
             labelline.getch()
 
-        elif i[0] == 'A':
-
+        if i[0] == 'A':
             # Function key label line
             if i[1] == '1':
                 if i[2] == '4':
@@ -142,7 +134,6 @@ def wyprint(line):
                     statusline.chgat(1, 1, slattr)
 
                 statusline.refresh()
-                statusline.getch()
 
         time.sleep(.0025)
 
