@@ -7,7 +7,7 @@ Currently interprets:
 ```
 ESC = line col              Address cursor in current 80-column page
 ESC H STX (ESC H CTRL B)    Graphics mode on
-ESC H ETX (ESC H CTRL B)    Graphics mode on
+ESC H ETX (ESC H CTRL C)    Graphics mode off
 ESC +                       Clear page to spaces
 ESC z ( text                Program/display unshifted label line
 ESC F message CR            Program and display computer message on status line

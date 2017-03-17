@@ -26,7 +26,7 @@ def graphicsmode(raw):
                     '9': '┤',
                     ':': '─',
                     ' ': ' ',
-                    '␋': '␋',
+                    '␋': '',  # ignores vertical tabs
                     '\n': ' '}
 
         box = []
