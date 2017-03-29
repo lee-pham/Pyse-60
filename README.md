@@ -1,8 +1,7 @@
 # Pyse-60
+## written for python3
 A curses application written in Python that interprets a Wyse 60 output from a serial device.
 
-This application has yet to be tested on a real time device as text logs are currently being used to simulate the serial device output.
- 
 Currently interprets:
 ```
 ESC = line col              Address cursor in current 80-column page
@@ -24,5 +23,4 @@ ESC ` 0
 ESC )                       Write-protect mode on
 ESC (                       Write-protect mode off
 ```
-Some quibbles:
-* New line character ('\n') sometimes breaks windows, so ESC F message terminates at the final two characters (string[:-2]) to avoid crash.
+Arrow and [official] function keys are currently unsupported. The function keys have been mapped to QWERTYUI, F1-F8.
