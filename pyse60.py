@@ -4,7 +4,7 @@ import curses
 import serial
 import time
 
-ser = serial.Serial('/dev/ttyUSB0', 19200, timeout=0)
+ser = serial.Serial('your device here', 'your baud here as int', timeout=0)
 
 try:
     duration = 0  # set delay to visually inspect cursor movement

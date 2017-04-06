@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 def graphicsmode(raw):
     graphics = {'0': '┳',
                 '1': '┗',

@@ -97,7 +97,6 @@ try:
                 line.append(chr(c))
                 if chr(c) == '\r':
                     return ''.join(line)[:-1]  # return message without the final carriage return character
-                    break  # maybe this break is unnecessary...?
 
 
     def wyprint(message):

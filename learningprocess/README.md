@@ -1,0 +1,1 @@
+Some files that I created to learn curses.
